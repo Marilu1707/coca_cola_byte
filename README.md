@@ -19,6 +19,6 @@ Este proyecto es una maqueta de sitio web inspirada en la campaña "Coca-Cola By
 
 El sitio contiene múltiples secciones relacionadas con productos, eventos y preguntas frecuentes.
 
-## Uso
+## Link
 Puedes visualizar el proyecto desde este link
 https://coca-cola-byte.vercel.app/
