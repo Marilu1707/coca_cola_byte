@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Contacto{% endblock %}
+{% block content %}
+<h2>Contacto</h2>
+<form method="post">
+    <input type="text" name="name" placeholder="Nombre" required><br>
+    <input type="email" name="email" placeholder="Email" required><br>
+    <textarea name="message" placeholder="Mensaje" required></textarea><br>
+    <button type="submit">Enviar</button>
+</form>
+{% endblock %}

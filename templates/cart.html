@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Carrito{% endblock %}
+{% block content %}
+<h2>Carrito</h2>
+<ul>
+{% for item in cart %}
+  <li>{{ item['name'] }} - {{ item['price'] }} <a href="{{ url_for('remove_from_cart', product_id=item['id']) }}">Eliminar</a></li>
+{% endfor %}
+</ul>
+<p>Total: {{ total }}</p>
+{% endblock %}

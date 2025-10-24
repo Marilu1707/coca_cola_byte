@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Coca-Cola Byte{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="menu">
+        <section class="menu__container">
+            <div class="menu__logo"><img src="{{ url_for('static', filename='img/Logo.png') }}" alt="logo"></div>
+            <ul class="menu__links">
+                <li class="menu__item"><a href="{{ url_for('index') }}" class="menu__link">Home</a></li>
+                <li class="menu__item"><a href="{{ url_for('store') }}" class="menu__link">Tienda</a></li>
+                <li class="menu__item"><a href="{{ url_for('contact') }}" class="menu__link">Contacto</a></li>
+                {% if 'user_id' in session %}
+                <li class="menu__item"><a href="{{ url_for('cart') }}" class="menu__link">Carrito</a></li>
+                <li class="menu__item"><a href="{{ url_for('logout') }}" class="menu__link">Salir</a></li>
+                {% else %}
+                <li class="menu__item"><a href="{{ url_for('login') }}" class="menu__link">Login</a></li>
+                <li class="menu__item"><a href="{{ url_for('register') }}" class="menu__link">Registro</a></li>
+                {% endif %}
+            </ul>
+        </section>
+    </nav>
+    {% block content %}{% endblock %}
+    <script src="{{ url_for('static', filename='js/myscript.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>
