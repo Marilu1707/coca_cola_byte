@@ -18,3 +18,7 @@ Este proyecto es una maqueta de sitio web inspirada en la campaña "Coca-Cola By
 3. Abrir `http://localhost:5000` en el navegador.
 
 El sitio contiene múltiples secciones relacionadas con productos, eventos y preguntas frecuentes.
+
+## Uso
+Puedes visualizar el proyecto desde este link
+https://coca-cola-byte.vercel.app/
