@@ -619,8 +619,7 @@ iframe {
 .container_compra {
   display: flex;
   justify-content: center;
-  align-items: center;
-  position: relative;
+  align-items: stretch;
 }
 
 .text_compra {
@@ -691,7 +690,7 @@ iframe {
 @media only screen and (max-width: 768px) {
   .container_compra {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
   }
 
