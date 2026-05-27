@@ -628,18 +628,12 @@ iframe {
   font-family: 'Press Start 2P', cursive;
   background-color: #090126;
   flex: 1;
-  padding: 20px;
+  padding: 24px 20px 20px;
   text-align: center;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  height: 100%;
-  width: auto;
-  max-height: 400px;
-  object-fit: cover;
-  margin-bottom: 50px;
-  font-family: 'Press Start 2P', cursive;
+  gap: 12px;
 }
 
 .text_compra h1 {
@@ -672,13 +666,12 @@ iframe {
 }
 
 .button_compra {
-  position: absolute;
-  bottom: 0;
+  margin-top: auto;
+  padding-top: 16px;
   width: 100%;
   text-align: center;
   display: flex;
   justify-content: center;
-  margin-bottom: 0;
 }
 
 .button_compra a {
@@ -725,8 +718,8 @@ iframe {
   }
 
   .button_compra {
-    display: block;
     margin-top: auto;
+    padding-top: 12px;
   }
 }
 
@@ -1232,8 +1225,8 @@ footer .contenido3 img {
   transform: translateX(-50%) translateY(0);
 }
 
-/* ===== LOGIN MODAL ===== */
-#login-modal {
+/* ===== AUTH MODAL (login + register) ===== */
+#auth-modal {
   display: none;
   position: fixed;
   inset: 0;
@@ -1243,29 +1236,29 @@ footer .contenido3 img {
   justify-content: center;
 }
 
-#login-modal.open {
+#auth-modal.open {
   display: flex;
 }
 
-.login-modal-box {
+.auth-modal-box {
   background: #0e0135;
   border: 2px solid #c4a8fc;
   border-radius: 10px;
-  padding: 38px 32px 32px;
-  width: 380px;
+  padding: 38px 32px 28px;
+  width: 400px;
   max-width: 95vw;
   position: relative;
 }
 
-.login-modal-box h2 {
+.auth-modal-box h2 {
   color: white;
   font-family: 'Press Start 2P', cursive;
   font-size: 13px;
   text-align: center;
-  margin-bottom: 28px;
+  margin-bottom: 24px;
 }
 
-.login-close {
+.auth-close {
   position: absolute;
   top: 14px;
   right: 16px;
@@ -1278,18 +1271,19 @@ footer .contenido3 img {
   padding: 4px;
 }
 
-.login-close:hover {
+.auth-close:hover {
   color: #df50f2;
 }
 
-.login-modal-box form {
+.auth-modal-box form {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 13px;
 }
 
-.login-modal-box input[type="email"],
-.login-modal-box input[type="password"] {
+.auth-modal-box input[type="email"],
+.auth-modal-box input[type="password"],
+.auth-modal-box input[type="text"] {
   background: #1a0a40;
   border: 1.5px solid #c4a8fc;
   color: white;
@@ -1301,23 +1295,23 @@ footer .contenido3 img {
   transition: border-color 0.2s;
 }
 
-.login-modal-box input:focus {
+.auth-modal-box input:focus {
   border-color: #df50f2;
 }
 
-.login-modal-box input::placeholder {
-  color: rgba(196, 168, 252, 0.55);
+.auth-modal-box input::placeholder {
+  color: rgba(196, 168, 252, 0.5);
 }
 
-.login-error {
+.auth-error {
   color: #ff5555;
   font-family: 'Lato', sans-serif;
   font-size: 12px;
   min-height: 16px;
-  margin-top: -6px;
+  margin-top: -4px;
 }
 
-.btn-submit-login {
+.btn-submit-auth {
   background: #df50f2;
   color: white;
   border: none;
@@ -1330,17 +1324,38 @@ footer .contenido3 img {
   margin-top: 4px;
 }
 
-.btn-submit-login:hover {
+.btn-submit-auth:hover {
   background: #45ff93;
   color: #090126;
 }
 
-.login-hint {
-  color: rgba(196, 168, 252, 0.7);
+.auth-hint {
+  color: rgba(196, 168, 252, 0.65);
   font-family: 'Lato', sans-serif;
   font-size: 11px;
   text-align: center;
   margin-top: 2px;
+}
+
+.auth-switch {
+  color: rgba(196, 168, 252, 0.8);
+  font-family: 'Lato', sans-serif;
+  font-size: 13px;
+  text-align: center;
+  margin-top: 18px;
+  border-top: 1px solid rgba(196, 168, 252, 0.2);
+  padding-top: 14px;
+}
+
+.auth-switch span {
+  color: #df50f2;
+  cursor: pointer;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.auth-switch span:hover {
+  color: #45ff93;
 }
 
 /* ===== ADD TO CART BUTTON ===== */
@@ -1363,13 +1378,44 @@ footer .contenido3 img {
   color: #090126;
 }
 
+/* ===== REGISTER BUTTON ===== */
+.btn-register {
+  background: transparent;
+  border: 1.5px solid #45ff93;
+  color: #45ff93;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 8px;
+  padding: 7px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  line-height: 1;
+}
+
+.btn-register:hover {
+  background: #45ff93;
+  color: #090126;
+}
+
+/* ===== FAQ container ===== */
+.container_faq {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
 @media (max-width: 800px) {
   .menu__actions {
     gap: 4px;
     padding-right: 6px;
   }
 
-  .btn-login {
+  .btn-login,
+  .btn-register {
     font-size: 7px;
     padding: 6px 8px;
   }

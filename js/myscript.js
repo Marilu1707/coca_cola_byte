@@ -10,10 +10,8 @@
                 let subMenu = element.children[1];
                 let height = 0;
                 element.classList.toggle('menu__item--active');
-                if (subMenu.clientHeight === 0) {
-                    height = subMenu.scrollHeight;
-                }
-                subMenu.style.height = `${height}px`;
+                if (subMenu.clientHeight === 0) height = subMenu.scrollHeight;
+                subMenu.style.height = height + 'px';
             });
         });
     };
@@ -57,6 +55,33 @@ preguntas.forEach(pregunta =>
     })
 );
 
+/* ===== FORMS — intercept all submit (newsletter + footer) ===== */
+document.addEventListener('submit', function (e) {
+    const form = e.target;
+    // Newsletter suscripción
+    if (form.closest('.newsletter')) {
+        e.preventDefault();
+        const emailInput = form.querySelector('input[type="email"]');
+        if (emailInput && emailInput.value.trim()) {
+            showToast('¡Suscripción exitosa! Te avisaremos las novedades 📧');
+            form.reset();
+        } else {
+            showToast('Ingresá un correo válido.');
+        }
+        return;
+    }
+    // Footer "Regístrese"
+    if (form.closest('.footer-col')) {
+        e.preventDefault();
+        const email = form.querySelector('input[type="email"]');
+        if (email && email.value.trim()) {
+            showToast('¡Te uniste a la lista! 📬');
+            form.reset();
+        }
+        return;
+    }
+});
+
 /* ===== CART ===== */
 let cart = JSON.parse(localStorage.getItem('ccb_cart') || '[]');
 
@@ -77,11 +102,11 @@ function addToCart(name, price, img) {
     if (existing) {
         existing.qty++;
     } else {
-        cart.push({ name, price, img, qty: 1 });
+        cart.push({ name: name, price: price, img: img, qty: 1 });
     }
     saveCart();
     updateCartCounter();
-    showToast(`"${name}" agregado al carrito 🛒`);
+    showToast('"' + name + '" agregado al carrito 🛒');
 }
 
 function removeFromCart(name) {
@@ -111,19 +136,19 @@ function renderCartSidebar() {
         return;
     }
 
-    body.innerHTML = cart.map(item => `
-        <div class="cart-item">
-            <img src="${item.img}" alt="${item.name}">
-            <div class="cart-item-info">
-                <span class="cart-item-name">${item.name}</span>
-                <span class="cart-item-price">$${(item.price * item.qty).toFixed(2)} (x${item.qty})</span>
-            </div>
-            <button class="cart-item-remove" onclick="removeFromCart('${item.name.replace(/'/g, "\\'")}')">✕</button>
-        </div>
-    `).join('');
+    body.innerHTML = cart.map(function (item) {
+        return '<div class="cart-item">' +
+            '<img src="' + item.img + '" alt="' + item.name + '">' +
+            '<div class="cart-item-info">' +
+            '<span class="cart-item-name">' + item.name + '</span>' +
+            '<span class="cart-item-price">$' + (item.price * item.qty).toFixed(2) + ' (x' + item.qty + ')</span>' +
+            '</div>' +
+            '<button class="cart-item-remove" onclick="removeFromCart(\'' + item.name.replace(/'/g, "\\'") + '\')">✕</button>' +
+            '</div>';
+    }).join('');
 
-    const totalAmt = cart.reduce((s, i) => s + i.price * i.qty, 0);
-    totalEl.textContent = `Total: $${totalAmt.toFixed(2)}`;
+    const totalAmt = cart.reduce(function (s, i) { return s + i.price * i.qty; }, 0);
+    totalEl.textContent = 'Total: $' + totalAmt.toFixed(2);
 }
 
 function showToast(msg) {
@@ -131,10 +156,10 @@ function showToast(msg) {
     if (!t) return;
     t.textContent = msg;
     t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2800);
+    setTimeout(function () { t.classList.remove('show'); }, 2800);
 }
 
-/* ===== LOGIN ===== */
+/* ===== AUTH ===== */
 function getUser() {
     return localStorage.getItem('ccb_user');
 }
@@ -142,45 +167,101 @@ function getUser() {
 function updateLoginUI() {
     const user = getUser();
     const btn = document.getElementById('btn-login');
+    const btnReg = document.getElementById('btn-register');
     if (!btn) return;
+
     if (user) {
-        btn.innerHTML = `<i class="fa fa-user-circle"></i> ${user} <span class="logout-link" onclick="logout(event)">Salir</span>`;
+        btn.innerHTML = '<i class="fa fa-user-circle"></i> ' + user +
+            ' <span class="logout-link" onclick="logout(event)">Salir</span>';
         btn.classList.add('logged-in');
+        if (btnReg) btnReg.style.display = 'none';
     } else {
-        btn.innerHTML = `<i class="fa fa-user"></i> Iniciar sesión`;
+        btn.innerHTML = '<i class="fa fa-user"></i> Ingresar';
         btn.classList.remove('logged-in');
+        if (btnReg) btnReg.style.display = '';
     }
 }
 
-function openLoginModal() {
+function openAuthModal(view) {
     if (getUser()) return;
-    const modal = document.getElementById('login-modal');
-    if (modal) {
-        modal.classList.add('open');
-        document.getElementById('login-email').focus();
-        document.getElementById('login-error').textContent = '';
-    }
+    const modal = document.getElementById('auth-modal');
+    if (!modal) return;
+    modal.classList.add('open');
+    switchAuthView(view || 'login');
+    clearAuthErrors();
+    setTimeout(function () {
+        const focus = document.getElementById(view === 'register' ? 'reg-name' : 'login-email');
+        if (focus) focus.focus();
+    }, 80);
 }
 
-function closeLoginModal() {
-    const modal = document.getElementById('login-modal');
+function openLoginModal() { openAuthModal('login'); }
+function openRegisterModal() { openAuthModal('register'); }
+
+function closeAuthModal() {
+    const modal = document.getElementById('auth-modal');
     if (modal) modal.classList.remove('open');
+}
+
+function switchToRegister() {
+    switchAuthView('register');
+    clearAuthErrors();
+    setTimeout(function () {
+        var f = document.getElementById('reg-name');
+        if (f) f.focus();
+    }, 50);
+}
+
+function switchToLogin() {
+    switchAuthView('login');
+    clearAuthErrors();
+    setTimeout(function () {
+        var f = document.getElementById('login-email');
+        if (f) f.focus();
+    }, 50);
+}
+
+function switchAuthView(view) {
+    var loginView = document.getElementById('auth-login-view');
+    var regView = document.getElementById('auth-register-view');
+    if (loginView) loginView.style.display = view === 'login' ? '' : 'none';
+    if (regView) regView.style.display = view === 'register' ? '' : 'none';
+}
+
+function clearAuthErrors() {
+    var e1 = document.getElementById('login-error');
+    var e2 = document.getElementById('reg-error');
+    if (e1) e1.textContent = '';
+    if (e2) e2.textContent = '';
 }
 
 function submitLogin(e) {
     e.preventDefault();
-    const email = document.getElementById('login-email').value.trim();
-    const pass = document.getElementById('login-pass').value;
-    const err = document.getElementById('login-error');
-    if (!email || !pass) {
-        err.textContent = 'Completá todos los campos.';
-        return;
-    }
-    const username = email.split('@')[0];
+    var email = document.getElementById('login-email').value.trim();
+    var pass = document.getElementById('login-pass').value;
+    var err = document.getElementById('login-error');
+    if (!email || !pass) { err.textContent = 'Completá todos los campos.'; return; }
+    var username = email.split('@')[0];
     localStorage.setItem('ccb_user', username);
-    closeLoginModal();
+    closeAuthModal();
     updateLoginUI();
-    showToast(`¡Bienvenido, ${username}! 🎮`);
+    showToast('¡Bienvenido, ' + username + '! 🎮');
+}
+
+function submitRegister(e) {
+    e.preventDefault();
+    var name = document.getElementById('reg-name').value.trim();
+    var email = document.getElementById('reg-email').value.trim();
+    var pass = document.getElementById('reg-pass').value;
+    var pass2 = document.getElementById('reg-pass2').value;
+    var err = document.getElementById('reg-error');
+    if (!name || !email || !pass || !pass2) { err.textContent = 'Completá todos los campos.'; return; }
+    if (pass !== pass2) { err.textContent = 'Las contraseñas no coinciden.'; return; }
+    if (pass.length < 6) { err.textContent = 'La contraseña debe tener al menos 6 caracteres.'; return; }
+    localStorage.setItem('ccb_user', name);
+    closeAuthModal();
+    updateLoginUI();
+    showToast('¡Cuenta creada! Bienvenido, ' + name + '! 🎮');
 }
 
 function logout(e) {
@@ -192,49 +273,77 @@ function logout(e) {
 
 /* ===== DOM INJECTION ===== */
 function injectUI() {
-    // Cart sidebar
-    const sidebar = document.createElement('div');
+    /* Cart sidebar */
+    var sidebar = document.createElement('div');
     sidebar.id = 'cart-sidebar';
-    sidebar.innerHTML = `
-        <div class="cart-header">
-            <h2>Tu carrito</h2>
-            <button class="cart-close" onclick="toggleCart()">✕</button>
-        </div>
-        <div id="cart-body" class="cart-body"></div>
-        <div id="cart-total" class="cart-total-line"></div>
-        <button class="btn-checkout" onclick="showToast('¡Gracias por tu compra! 🎮')">Finalizar compra</button>
-    `;
+    sidebar.innerHTML =
+        '<div class="cart-header">' +
+        '<h2>Tu carrito</h2>' +
+        '<button class="cart-close" onclick="toggleCart()">✕</button>' +
+        '</div>' +
+        '<div id="cart-body" class="cart-body"></div>' +
+        '<div id="cart-total" class="cart-total-line"></div>' +
+        '<button class="btn-checkout" onclick="showToast(\'¡Gracias por tu compra! 🎮\')">Finalizar compra</button>';
     document.body.appendChild(sidebar);
 
-    // Overlay
-    const overlay = document.createElement('div');
+    /* Overlay */
+    var overlay = document.createElement('div');
     overlay.id = 'cart-overlay';
     overlay.onclick = toggleCart;
     document.body.appendChild(overlay);
 
-    // Toast
-    const toast = document.createElement('div');
+    /* Toast */
+    var toast = document.createElement('div');
     toast.id = 'cart-toast';
     document.body.appendChild(toast);
 
-    // Login modal
-    const modal = document.createElement('div');
-    modal.id = 'login-modal';
-    modal.innerHTML = `
-        <div class="login-modal-box">
-            <button class="login-close" onclick="closeLoginModal()">✕</button>
-            <h2>Iniciar sesión</h2>
-            <form onsubmit="submitLogin(event)">
-                <input id="login-email" type="email" placeholder="Correo electrónico" autocomplete="email" required>
-                <input id="login-pass" type="password" placeholder="Contraseña" required>
-                <span id="login-error" class="login-error"></span>
-                <button type="submit" class="btn-submit-login">Entrar</button>
-                <p class="login-hint">Podés ingresar con cualquier correo y contraseña.</p>
-            </form>
-        </div>
-    `;
-    modal.addEventListener('click', e => { if (e.target === modal) closeLoginModal(); });
+    /* Auth modal (login + register) */
+    var modal = document.createElement('div');
+    modal.id = 'auth-modal';
+    modal.innerHTML =
+        '<div class="auth-modal-box">' +
+        /* ---- Login view ---- */
+        '<div id="auth-login-view">' +
+        '<button class="auth-close" onclick="closeAuthModal()">✕</button>' +
+        '<h2>Iniciar sesión</h2>' +
+        '<form onsubmit="submitLogin(event)">' +
+        '<input id="login-email" type="email" placeholder="Correo electrónico" autocomplete="email">' +
+        '<input id="login-pass" type="password" placeholder="Contraseña">' +
+        '<span id="login-error" class="auth-error"></span>' +
+        '<button type="submit" class="btn-submit-auth">Entrar</button>' +
+        '<p class="auth-hint">Podés ingresar con cualquier correo y contraseña.</p>' +
+        '</form>' +
+        '<p class="auth-switch">¿No tenés cuenta? <span onclick="switchToRegister()">Crear una</span></p>' +
+        '</div>' +
+        /* ---- Register view ---- */
+        '<div id="auth-register-view" style="display:none">' +
+        '<button class="auth-close" onclick="closeAuthModal()">✕</button>' +
+        '<h2>Crear cuenta</h2>' +
+        '<form onsubmit="submitRegister(event)">' +
+        '<input id="reg-name" type="text" placeholder="Nombre" autocomplete="name">' +
+        '<input id="reg-email" type="email" placeholder="Correo electrónico" autocomplete="email">' +
+        '<input id="reg-pass" type="password" placeholder="Contraseña (mín. 6 caracteres)">' +
+        '<input id="reg-pass2" type="password" placeholder="Confirmar contraseña">' +
+        '<span id="reg-error" class="auth-error"></span>' +
+        '<button type="submit" class="btn-submit-auth">Crear cuenta</button>' +
+        '<p class="auth-hint">Podés registrarte con cualquier dato.</p>' +
+        '</form>' +
+        '<p class="auth-switch">¿Ya tenés cuenta? <span onclick="switchToLogin()">Iniciar sesión</span></p>' +
+        '</div>' +
+        '</div>';
+    modal.addEventListener('click', function (e) { if (e.target === modal) closeAuthModal(); });
     document.body.appendChild(modal);
+
+    /* Inject "Crear cuenta" button next to login btn */
+    var btnLogin = document.getElementById('btn-login');
+    if (btnLogin) {
+        var btnReg = document.createElement('button');
+        btnReg.className = 'btn-register';
+        btnReg.id = 'btn-register';
+        btnReg.setAttribute('onclick', 'openRegisterModal()');
+        btnReg.innerHTML = '<i class="fa fa-user-plus"></i> Crear cuenta';
+        btnLogin.insertAdjacentElement('afterend', btnReg);
+    }
 
     updateLoginUI();
     updateCartCounter();
