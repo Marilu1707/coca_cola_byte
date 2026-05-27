@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -63,6 +63,16 @@
 
       </ul>
 
+      <div class="menu__actions">
+        <button class="btn-login" id="btn-login" onclick="openLoginModal()">
+          <i class="fa fa-user"></i> Iniciar sesión
+        </button>
+        <button class="btn-cart" onclick="toggleCart()" aria-label="Carrito">
+          <i class="fa fa-shopping-cart"></i>
+          <span class="cart-count">0</span>
+        </button>
+      </div>
+
       <div class="menu__hamburguer">
         <img src="assets/menu.svg" class="menu__img" alt="simbolo de menu para celulares (3 lineas)">
       </div>
@@ -86,7 +96,7 @@
         <br> Lavado a máquina de adentro hacia afuera.
       </p>
       <div class="button_compra">
-        <a href="#">COMPRAR</a>
+        <button class="btn-add-cart" onclick="addToCart('Remera Negra Byte', 34.99, 'img/remera_negra.png')">AGREGAR AL CARRITO</button>
       </div>
     </div>
   </div>
@@ -103,7 +113,7 @@
         <br> Lavado a máquina de adentro hacia afuera.
       </p>
       <div class="button_compra">
-        <a href="#">COMPRAR</a>
+        <button class="btn-add-cart" onclick="addToCart('Remera Gris Byte', 34.99, 'img/remera_gris.png')">AGREGAR AL CARRITO</button>
       </div>
     </div>
   </div>
@@ -122,7 +132,7 @@
         <br> Lavado a máquina/de adentro hacia afuera.
       </p>
       <div class="button_compra">
-        <a href="#">COMPRAR</a>
+        <button class="btn-add-cart" onclick="addToCart('Buzo Negro Byte', 59.99, 'img/buzo_negro.png')">AGREGAR AL CARRITO</button>
       </div>
     </div>
   </div>
@@ -140,7 +150,7 @@
         <br> Lavado a máquina/de adentro hacia afuera.
       </p>
       <div class="button_compra">
-        <a href="#">COMPRAR</a>
+        <button class="btn-add-cart" onclick="addToCart('Buzo Blanco Byte', 59.99, 'img/buzo_blanco.png')">AGREGAR AL CARRITO</button>
       </div>
     </div>
   </div>
@@ -159,7 +169,7 @@
         <br> día.
       </p>
       <div class="button_compra">
-        <a href="#">COMPRAR</a>
+        <button class="btn-add-cart" onclick="addToCart('Zapatillas Negras Byte', 89.99, 'img/zapatillas.jpg')">AGREGAR AL CARRITO</button>
       </div>
     </div>
   </div>
@@ -173,7 +183,7 @@
       <br><br>
       <p>Chanclas negras con el icónico guión de <br> Coca-Cola en rosa.</p>
       <div class="button_compra">
-        <a href="#">COMPRAR</a>
+        <button class="btn-add-cart" onclick="addToCart('Sandalias Negras Byte', 44.99, 'img/chinela.jpg')">AGREGAR AL CARRITO</button>
       </div>
     </div>
   </div>
@@ -192,7 +202,7 @@
         <br> personalización aún mayor.
       </p>
       <div class="button_compra">
-        <a href="#">COMPRAR</a>
+        <button class="btn-add-cart" onclick="addToCart('Sandalias Blancas Byte', 44.99, 'img/crocs.jpg')">AGREGAR AL CARRITO</button>
       </div>
     </div>
   </div>
@@ -288,9 +298,9 @@
       <div class="row">
         <div class="contenido3">
           <div class="integrantes">
-            <ul>
+            <ul>
               <li>Ivanec, Mora Amalia (LU: 1179661)</li>
-              <li>Massironi, María Luján (LU: 1165999)</li>
+              <li>Massironi, María Luján (LU: 1165999)</li>
             </ul>
           </div>
           <div class="logo">

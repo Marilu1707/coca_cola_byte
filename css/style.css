@@ -953,3 +953,424 @@ footer .contenido3 img {
     flex-direction: column;
   }
 }
+
+/* ===== MENU ACTIONS (login + cart) ===== */
+.menu__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-right: 10px;
+  flex-shrink: 0;
+}
+
+.btn-login {
+  background: transparent;
+  border: 1.5px solid rgba(255, 255, 255, 0.55);
+  color: white;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 8px;
+  padding: 7px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  line-height: 1;
+}
+
+.btn-login:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: white;
+}
+
+.btn-login.logged-in {
+  border-color: #45ff93;
+  color: #45ff93;
+}
+
+.logout-link {
+  color: #df50f2;
+  cursor: pointer;
+  font-size: 7px;
+  margin-left: 4px;
+  text-decoration: underline;
+}
+
+.logout-link:hover {
+  color: #45ff93;
+}
+
+.btn-cart {
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  position: relative;
+  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s;
+}
+
+.btn-cart:hover {
+  color: #45ff93;
+}
+
+.btn-cart .fa {
+  font-size: 22px;
+}
+
+.cart-count {
+  position: absolute;
+  top: 2px;
+  right: 4px;
+  background: #df50f2;
+  color: white;
+  border-radius: 50%;
+  width: 17px;
+  height: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
+  line-height: 1;
+  display: none;
+}
+
+/* ===== CART SIDEBAR ===== */
+#cart-sidebar {
+  position: fixed;
+  top: 0;
+  right: -430px;
+  width: 400px;
+  max-width: 95vw;
+  height: 100vh;
+  background: #0e0135;
+  border-left: 2px solid #c4a8fc;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+#cart-sidebar.open {
+  right: 0;
+}
+
+.cart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(196, 168, 252, 0.3);
+  padding-bottom: 14px;
+}
+
+.cart-header h2 {
+  color: white;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 13px;
+  text-align: left;
+}
+
+.cart-close {
+  background: none;
+  border: none;
+  color: #c4a8fc;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px 8px;
+  line-height: 1;
+}
+
+.cart-close:hover {
+  color: #df50f2;
+}
+
+.cart-body {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cart-empty {
+  color: #c4a8fc;
+  font-family: 'Lato', sans-serif;
+  text-align: center;
+  margin-top: 50px;
+  font-size: 15px;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #1a0a40;
+  border-radius: 6px;
+  padding: 10px;
+}
+
+.cart-item img {
+  width: 58px;
+  height: 58px;
+  object-fit: cover;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.cart-item-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cart-item-name {
+  color: white;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 7px;
+  line-height: 1.5;
+}
+
+.cart-item-price {
+  color: #45ff93;
+  font-family: 'Lato', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.cart-item-remove {
+  background: none;
+  border: none;
+  color: #df50f2;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px 6px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.cart-item-remove:hover {
+  color: #ff5555;
+}
+
+.cart-total-line {
+  color: #45ff93;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 11px;
+  text-align: right;
+  padding: 14px 0 10px;
+  border-top: 1px solid rgba(196, 168, 252, 0.3);
+  margin-top: 10px;
+  min-height: 20px;
+}
+
+.btn-checkout {
+  background: #df50f2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 9px;
+  padding: 14px;
+  width: 100%;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.btn-checkout:hover {
+  background: #45ff93;
+  color: #090126;
+}
+
+/* ===== OVERLAY ===== */
+#cart-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1999;
+}
+
+#cart-overlay.open {
+  display: block;
+}
+
+/* ===== TOAST ===== */
+#cart-toast {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%) translateY(16px);
+  background: #1a0a40;
+  color: #45ff93;
+  border: 1.5px solid #c4a8fc;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 9px;
+  padding: 13px 24px;
+  border-radius: 6px;
+  z-index: 5000;
+  opacity: 0;
+  transition: opacity 0.3s, transform 0.3s;
+  pointer-events: none;
+  text-align: center;
+  max-width: 88vw;
+  line-height: 1.6;
+}
+
+#cart-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ===== LOGIN MODAL ===== */
+#login-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.72);
+  z-index: 4000;
+  align-items: center;
+  justify-content: center;
+}
+
+#login-modal.open {
+  display: flex;
+}
+
+.login-modal-box {
+  background: #0e0135;
+  border: 2px solid #c4a8fc;
+  border-radius: 10px;
+  padding: 38px 32px 32px;
+  width: 380px;
+  max-width: 95vw;
+  position: relative;
+}
+
+.login-modal-box h2 {
+  color: white;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 13px;
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.login-close {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  background: none;
+  border: none;
+  color: #c4a8fc;
+  font-size: 20px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px;
+}
+
+.login-close:hover {
+  color: #df50f2;
+}
+
+.login-modal-box form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.login-modal-box input[type="email"],
+.login-modal-box input[type="password"] {
+  background: #1a0a40;
+  border: 1.5px solid #c4a8fc;
+  color: white;
+  font-family: 'Lato', sans-serif;
+  font-size: 15px;
+  padding: 12px 14px;
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.login-modal-box input:focus {
+  border-color: #df50f2;
+}
+
+.login-modal-box input::placeholder {
+  color: rgba(196, 168, 252, 0.55);
+}
+
+.login-error {
+  color: #ff5555;
+  font-family: 'Lato', sans-serif;
+  font-size: 12px;
+  min-height: 16px;
+  margin-top: -6px;
+}
+
+.btn-submit-login {
+  background: #df50f2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 10px;
+  padding: 14px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  margin-top: 4px;
+}
+
+.btn-submit-login:hover {
+  background: #45ff93;
+  color: #090126;
+}
+
+.login-hint {
+  color: rgba(196, 168, 252, 0.7);
+  font-family: 'Lato', sans-serif;
+  font-size: 11px;
+  text-align: center;
+  margin-top: 2px;
+}
+
+/* ===== ADD TO CART BUTTON ===== */
+.btn-add-cart {
+  display: inline-block;
+  background-color: #df50f2;
+  color: white;
+  padding: 8px 14px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 9px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  line-height: 1.4;
+}
+
+.btn-add-cart:hover {
+  background-color: #45ff93;
+  color: #090126;
+}
+
+@media (max-width: 800px) {
+  .menu__actions {
+    gap: 4px;
+    padding-right: 6px;
+  }
+
+  .btn-login {
+    font-size: 7px;
+    padding: 6px 8px;
+  }
+}

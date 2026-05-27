@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -15,9 +15,7 @@
 </head>
 
 <body>
-
-  <body>
-    <nav class="menu">
+  <nav class="menu">
       <section class="menu__container">
         <div class="menu__logo"><img src="img/Logo.png" alt="logo blanco de coca cola byte pixeles"></div>
 
@@ -65,6 +63,16 @@
 
         </ul>
 
+        <div class="menu__actions">
+          <button class="btn-login" id="btn-login" onclick="openLoginModal()">
+            <i class="fa fa-user"></i> Iniciar sesión
+          </button>
+          <button class="btn-cart" onclick="toggleCart()" aria-label="Carrito">
+            <i class="fa fa-shopping-cart"></i>
+            <span class="cart-count">0</span>
+          </button>
+        </div>
+
         <div class="menu__hamburguer">
           <img src="assets/menu.svg" class="menu__img" alt="simbolo de menu para celulares (3 lineas)">
         </div>
@@ -95,7 +103,7 @@
           X, Xbox Series S, Xbox <br> one, Nintendo Switch.
         </p>
         <div class="button_compra">
-          <a href="#">COMPRAR</a>
+          <button class="btn-add-cart" onclick="addToCart('Joystick SCUF Reflex Pro', 169.99, 'img/joystick.jpg')">AGREGAR AL CARRITO</button>
         </div>
       </div>
     </div>
@@ -114,7 +122,7 @@
           <br> one, Nintendo Switch.
         </p>
         <div class="button_compra">
-          <a href="#">COMPRAR</a>
+          <button class="btn-add-cart" onclick="addToCart('Auriculares H1 Byte', 129.99, 'img/auris.jpg')">AGREGAR AL CARRITO</button>
         </div>
       </div>
     </div>
@@ -130,7 +138,7 @@
           negocios, juegos, oficina, uso <br> doméstico, sin teclado numérico, más práctico <br> para jugadores y
           mecanógrafos, da más espacio <br> a tu escritorio.</p>
         <div class="button_compra">
-          <a href="#">COMPRAR</a>
+          <button class="btn-add-cart" onclick="addToCart('Teclado Corsair Byte', 89.99, 'img/teclado.jpg')">AGREGAR AL CARRITO</button>
         </div>
       </div>
     </div>
@@ -147,7 +155,7 @@
           máxima durabilidad. Optimizado para ratones <br> láser y ópticos para juegos, la base de goma <br>
           antideslizante lo ayuda a mantenerse <br> seguro en su lugar.</p>
         <div class="button_compra">
-          <a href="#">COMPRAR</a>
+          <button class="btn-add-cart" onclick="addToCart('Mouse Pad Corsair Byte', 29.99, 'img/pad.jpg')">AGREGAR AL CARRITO</button>
         </div>
       </div>
     </div>
@@ -163,7 +171,7 @@
           Coca-Cola, agua, bebidas <br> energéticas y refrigerios cerca para una <br> acción de juego ininterrumpida. El
           diseño <br> genial y pixelado es perfecto para jugadores, <br> fanáticos y coleccionistas.</p>
         <div class="button_compra">
-          <a href="#">COMPRAR</a>
+          <button class="btn-add-cart" onclick="addToCart('Refrigerador Mini Byte', 79.99, 'img/heladera.jpg')">AGREGAR AL CARRITO</button>
         </div>
       </div>
     </div>
@@ -258,9 +266,9 @@
         <div class="row">
           <div class="contenido3">
             <div class="integrantes">
-              <ul>
+              <ul>
                 <li>Ivanec, Mora Amalia (LU: 1179661)</li>
-                <li>Massironi, María Luján (LU: 1165999)</li>
+                <li>Massironi, María Luján (LU: 1165999)</li>
               </ul>
             </div>
             <div class="logo">
